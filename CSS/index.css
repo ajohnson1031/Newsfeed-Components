@@ -35,21 +35,37 @@
   margin: 0;
   font-size: 48px;
 }
+@keyframes slidein {
+  0% {
+    left: -350px;
+  }
+  100% {
+    left: 0;
+  }
+}
+@keyframes slideout {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -350px;
+  }
+}
 .menu-button {
   position: absolute;
   left: 20px;
   cursor: pointer;
 }
 .menu {
-  display: none;
+  display: block;
   position: fixed;
   top: 75px;
-  left: 0;
+  left: -350px;
   width: 350px;
   height: 100vh;
   /* This give the height 100% of the screen or, '100% of View Height' */
-  background-color: #81C784;
-  border: 1px solid #004D40;
+  background-color: #81c784;
+  border: 1px solid #004d40;
   border-left: none;
   border-bottom: none;
   z-index: 2;
@@ -62,7 +78,23 @@
   text-align: center;
 }
 .menu--open {
-  display: block;
+  left: 0;
+}
+@keyframes slidedown {
+  0% {
+    height: 50px;
+  }
+  100% {
+    height: auto;
+  }
+}
+@keyframes slideup {
+  100% {
+    height: auto;
+  }
+  0% {
+    height: 50px;
+  }
 }
 .articles {
   margin-top: 95px;
@@ -103,7 +135,7 @@
   background-color: white;
 }
 .article-open {
-  height: 400px;
+  height: auto;
 }
 html,
 body {

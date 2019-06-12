@@ -1,5 +1,4 @@
 // Because classes are not hoisted you will need to start your code at the bottom of the page.  Look for the comment "START HERE"
-
 class Article {
   constructor(domElement) {
     // assign this.domElement to the passed in domElement
@@ -9,12 +8,20 @@ class Article {
     // Using your expandButton reference, update the text on your expandButton to say "expand"
     this.expandButton.textContent = "expand";
     // Set a click handler on the expandButton reference, calling the expandArticle method.
+    this.open = false;
     this.expandButton.addEventListener("click", this.expandArticle.bind(this));
   }
 
   expandArticle() {
-    // Using our reference to the domElement, toggle a class to expand or hide the article.
+    // Using our reference to the domElement, toggle a class to expand or hide the article
     this.domElement.classList.toggle("article-open");
+    if (this.open === false) {
+      this.domElement.style.animation = "slidedown 0.5 linear";
+      this.open = true;
+    } else {
+      this.domElement.style.animation = "slideup 0.5 linear";
+      this.open = false;
+    }
   }
 }
 
