@@ -85,6 +85,15 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: "Becoming A Full Stack Developer",
+    date: "July 16, 2019",
+    firstParagraph: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at velit in lorem consequat bibendum eu quis massa. Nunc in molestie massa. Suspendisse vel dapibus diam. Pellentesque hendrerit, augue vitae maximus pellentesque, odio ligula viverra nulla, auctor viverra purus ipsum malesuada eros. Suspendisse lobortis nisl et imperdiet malesuada. In fringilla sagittis dui, eu placerat purus semper quis. Cras est est, sagittis ac mollis at, aliquam quis arcu. Donec et mollis dolor. Suspendisse eu arcu condimentum, iaculis massa a, ultrices tellus. Praesent eleifend nunc tortor, id gravida urna lacinia eget. Maecenas tempus faucibus orci at lacinia. Nullam vestibulum dolor suscipit vestibulum malesuada. Donec commodo enim lorem, id laoreet arcu pharetra eget.`,
+
+    secondParagraph: `Maecenas bibendum mauris ligula, eu vulputate urna viverra id. Proin id laoreet purus, ac ullamcorper justo. Praesent eget mattis tortor. Interdum et malesuada fames ac ante ipsum primis in faucibus. In sodales euismod sem eu congue. Quisque ipsum ligula, porttitor ut commodo sed, pulvinar a nulla. Fusce dignissim auctor erat nec vestibulum. Sed et nunc commodo, viverra elit non, pellentesque ligula. Aliquam bibendum sit amet lacus vel tincidunt. Sed nec odio sed velit viverra imperdiet ac sed ipsum. Aliquam eget lectus a purus finibus scelerisque. Ut fringilla leo ac lacus convallis euismod.`,
+
+    thirdParagraph: ` Maecenas quis congue ex. Phasellus convallis lobortis eros a placerat. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In maximus imperdiet sollicitudin. Integer gravida porttitor massa sed aliquam. Suspendisse suscipit non lacus quis porta. Nulla molestie elit eget nulla hendrerit, a dapibus metus volutpat. Pellentesque eleifend suscipit orci, nec efficitur ligula vehicula nec.`
   }
 ];
 
@@ -116,11 +125,17 @@ const data = [
 class ArticleList {
   constructor(articles) {
     this.articles = articles;
+    this.articlesContainer = document.querySelector(".articles");
     this.createArticles();
 
-    this.expandButton = document.querySelector(".expandButton");
-    this.expandButton.addEventListener("click", e =>
-      this.changeArticleExpandState(e)
+    this.expandButtons = document.querySelectorAll(".expandButton");
+    this.expandButtons.forEach(button =>
+      button.addEventListener("click", e => this.changeArticleExpandState(e))
+    );
+
+    this.closeButtons = document.querySelectorAll(".close");
+    this.closeButtons.forEach(button =>
+      button.addEventListener("click", e => this.removeArticle(e))
     );
   }
 
@@ -139,23 +154,36 @@ class ArticleList {
       this.articleSecondPara.textContent = article.secondParagraph;
       this.articleThirdPara = document.createElement("p");
       this.articleThirdPara.textContent = article.thirdParagraph;
-      this.articleButton = document.createElement("span");
-      this.articleButton.classList.add("expandButton");
-      this.articleButton.textContent = "Expand";
+      this.articleExpandButton = document.createElement("span");
+      this.articleExpandButton.classList.add("expandButton");
+      this.articleExpandButton.textContent = "Click to Expand";
+      this.articleCloseButton = document.createElement("span");
+      this.articleCloseButton.classList.add("close");
+      this.articleCloseButton.textContent = "x";
 
-      this.articlesContainer = document.querySelector(".articles");
       this.articlesContainer.appendChild(this.article);
       this.article.appendChild(this.articleH2);
       this.article.appendChild(this.articleDate);
       this.article.appendChild(this.articleFirstPara);
       this.article.appendChild(this.articleSecondPara);
       this.article.appendChild(this.articleThirdPara);
-      this.article.appendChild(this.articleButton);
+      this.article.appendChild(this.articleExpandButton);
+      this.article.appendChild(this.articleCloseButton);
     });
   }
 
   changeArticleExpandState(e) {
+    e.stopPropagation();
+    e.currentTarget.textContent =
+      e.currentTarget.textContent === "Click to Expand"
+        ? "Click to Close"
+        : "Click to Expand";
     e.target.parentNode.classList.toggle("article-open");
+  }
+
+  removeArticle(e) {
+    e.stopPropagation();
+    this.articlesContainer.removeChild(e.target.parentNode);
   }
 }
 
