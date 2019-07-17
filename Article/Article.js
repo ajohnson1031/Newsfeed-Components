@@ -118,9 +118,9 @@ class ArticleList {
     this.articles = articles;
     this.createArticles();
 
-    this.expandButton = document.querySelector(".expandButton");
-    this.expandButton.addEventListener("click", e =>
-      this.changeArticleExpandState(e)
+    this.expandButton = document.querySelectorAll(".expandButton");
+    this.expandButton.forEach(button =>
+      button.addEventListener("click", e => this.changeArticleExpandState(e))
     );
   }
 
